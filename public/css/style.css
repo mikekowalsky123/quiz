@@ -1,0 +1,219 @@
+/***colors***/
+/***global ***/
+html, body {
+  background: #e9e9e9;
+  margin: 0;
+  padding: 0;
+  color: #111;
+  font-size: 14px;
+  font-family: arial, tahoma, helvetica, "Times New Roman";
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+a {
+  color: #333;
+  transition: color 100ms;
+  text-decoration: none;
+}
+a:hover {
+  color: #111;
+}
+
+/*** header and nav ***/
+#header-menu {
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #f8f8f8;
+}
+#header-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#header-menu #header {
+  width: 100%;
+  max-width: 1000px;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  flex-flow: row;
+}
+#header-menu #header > div {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: center;
+}
+#header-menu #header #logo {
+  text-align: center;
+}
+#header-menu #header #logo h1 {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  font-size: 36px;
+}
+#header-menu #header #log-buttons ul {
+  display: flex;
+  flex-direction: row;
+}
+#header-menu #header #log-buttons ul li {
+  line-height: 30px;
+  height: 30px;
+  font-size: 15px;
+  transition: background-color 200ms;
+  border-radius: 4px;
+  margin: 0 5px;
+}
+#header-menu #header #log-buttons ul li:hover {
+  background: #333;
+}
+#header-menu #header #log-buttons ul li a {
+  display: block;
+  padding: 0 10px;
+  color: #555;
+}
+#header-menu #header #log-buttons ul li a:hover {
+  transition: color 200ms;
+  color: #f0f0f0;
+}
+#header-menu #top-menu {
+  width: 100%;
+  background: #47a54b;
+}
+#header-menu #top-menu > ul {
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  background: inherit;
+}
+#header-menu #top-menu > ul > li {
+  height: 35px;
+  line-height: 35px;
+  font-size: 15px;
+  transition: background-color 100ms, box-shadow 100ms;
+  background: inherit;
+}
+#header-menu #top-menu > ul > li > a {
+  color: #fafafa;
+  padding: 0 10px;
+  display: block;
+  flex-grow: 1;
+}
+#header-menu #top-menu > ul > li:hover {
+  background: #50c456;
+}
+
+#side-menu {
+  width: 300px;
+  background: #222;
+  height: 100vh;
+}
+
+/*** content ***/
+main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+}
+
+#container {
+  width: 1000px;
+}
+
+#content {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-around;
+}
+
+/*** forms ***/
+input, textarea, button {
+  padding: 0;
+  margin: 4px 0;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  background: #f6f6f6;
+  outline: none;
+  transition: background-color 100ms, border 100ms;
+}
+input:focus, textarea:focus, button:focus {
+  background: #fafafa;
+  border: 1px solid #a0a0a0;
+}
+
+input[type=submit], input[type=button], button {
+  width: 200px;
+  height: 34px;
+  font-size: 15px;
+}
+
+label {
+  text-align: center;
+  font-size: 13px;
+}
+
+input[type=text], input[type=password], input[type=email] {
+  width: 200px;
+  height: 25px;
+  font-size: 15px;
+}
+
+input[type=checkbox] {
+  margin: 4px 4px;
+}
+
+#authForm {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+#authForm label.required:before {
+  content: "*";
+  color: #ec0b31;
+}
+#authForm > form > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#authForm > form .checkbox {
+  flex-direction: row;
+}
+
+/*** footer ***/
+#footer {
+  margin: 25px 0 0;
+  width: 100%;
+  overflow: hidden;
+  height: 250px;
+  color: #eee;
+  background: #222;
+  display: flex;
+  justify-content: center;
+}
+#footer > div {
+  width: 200%;
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.9);
+  height: inherit;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+}
+#footer > div > div {
+  width: 50%;
+}
+
+/*# sourceMappingURL=style.css.map */
