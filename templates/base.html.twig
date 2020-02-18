@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Serwis Edukacyjny - {{ title }}{% endblock %}</title>
+        <title>{% block title %}{{ title }} - Serwis Edukacyjny{% endblock %}</title>
         {% block stylesheets %}
         <link rel="stylesheet" href="{{ asset("/css/style.css") }}">
         {% endblock %}
@@ -14,8 +14,12 @@
                     <h1>S-Edu</h1>
                 </div>
                 <div id="log-buttons">
+                    {% if app.user %}
+                        <span>Witaj, {{ app.user.firstName }}!</span>
+                    {% endif %}
                     <ul>
                     {% if app.user %}
+                        <li><a href="{{ path("app_edit_profile") }}">Edycja profilu</a></li>
                         <li><a href="{{ path("app_logout") }}">Wyloguj się</a></li>
                     {% else %}
                         <li><a href="{{ path("app_login") }}">Zaloguj się</a></li>
@@ -36,7 +40,18 @@
         {% block footer %}
         <footer id="footer">
             <div>
-                <div>Created by Majkuu.</div>
+                <div>
+                    <div>
+                        <p>Autor: Michał Majkuu Kowalski</p>
+                        <p>Kontakt:</p>
+                        <p>+48 111 111 111</p>
+                        <p>Facebook</p>
+                        <p>majk@majk.com</p>
+                    </div>
+                    <div>
+                        <p>&copy; S-Edu 2020</p>
+                    </div>
+                </div>
             </div>
         </footer>
         {% endblock %}

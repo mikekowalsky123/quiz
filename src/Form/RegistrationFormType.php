@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
@@ -26,7 +27,7 @@ class RegistrationFormType extends AbstractType
                         'message' => 'Please enter an username',
                     ]),
                     new Length([
-                        'min' => 6,
+                        'min' => 4,
                         'minMessage' => 'Your username should be at least {{ limit }} characters',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
@@ -64,6 +65,13 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
+            ->add('firstName', TextType::class, [
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Please enter your first name'
+                    ])
+                ]
+            ])
             ->add('email', EmailType::class, [
                 'constraints' => [
                     new NotBlank([
@@ -77,6 +85,7 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
+            ->add('submit', SubmitType::class)
         ;
     }
 

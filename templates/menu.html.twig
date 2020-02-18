@@ -2,11 +2,10 @@
 
 {% block menu %}
     <ul>
-        <li><a href="{{ path('app_homepage') }}">Strona główna</a></li>
-        <li><a href="{{ path('app_homepage') }}">Strona główna</a></li>
-        <li><a href="{{ path('app_homepage') }}">Strona główna</a></li>
-        <li><a href="{{ path('app_homepage') }}">Strona główna</a></li>
-        <li><a href="{{ path('app_homepage') }}">Strona główna</a></li>
-        <li><a href="{{ path('app_homepage') }}">Strona główna</a></li>
+        {% for menu_position in menu %}
+            {% if is_granted(menu_position.requiredRole) %}
+                <li><a href="{{ path(menu_position.route) }}">{{ menu_position.page }}</a></li>
+            {% endif %}
+        {% endfor %}
     </ul>
 {% endblock %}
