@@ -15,12 +15,49 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/edit-profile", name="app_edit_profile")
+     * @Route("/edit-profile/{info}", name="app_edit_profile")
      */
-    public function editProfile(Request $request, UserPasswordEncoderInterface $passwordEncoder) {
+    public function editProfile(Request $request, UserPasswordEncoderInterface $passwordEncoder, string $info = 'pass') {
         if(!$this->getUser())
-            return $this->redirectToRoute('app_homepage');
-        $changePass = new User();
+            return $this->redirectToRoute('app_login');
+        
+        $editAccount = new User();
+        switch($info) {
+            case 'pass':
+                $form = $this->createForm(ChangePasswordFormType::class, $editAccount);
+                break;
+            case 'personal':
+                $form = $this->createForm(ChangePersonalFormType::class, $editAccount);
+                break;
+            default:
+                return $this->redirectToRoute('app_homepage');
+        }
+
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()) {
+            if($info == 'pass') {
+                $entityManager = $this->getDoctrine()->getManager();
+
+                $changePass = $this->getUser();
+                $changePass->setPassword(
+                    $passwordEncoder->encodePassword(
+                        $changePass,
+                        $form->get('changePassword')->getData()
+                    )
+                );
+
+            }
+            else if($info == 'personal') {
+                $entityManager = $this->getDoctrine()->getManager();
+
+                $changePersonal = $this->getUser();
+                $newName = $form->get('firstName')->getData();
+                $changePersonal->setFirstName($newName);
+            }
+            $entityManager->flush();
+            return $this->redirectToRoute('app_edit_profile_success');
+        }
+        /*$changePass = new User();
         $formChangePass = $this->createForm(ChangePasswordFormType::class, $changePass);
         $formChangePass->handleRequest($request);
         
@@ -54,11 +91,10 @@ class UserController extends AbstractController
             $entityManager->flush();
 
             return $this->redirectToRoute('app_edit_profile_success');
-        }
+        }*/
 
         return $this->render('user/edit.html.twig', [
-            'formChangePass' => $formChangePass->createView(),
-            'formChangePersonal' => $formChangePersonal->createView(),
+            'form' => $form->createView(),
             'title' => 'Edycja profilu',
         ]);
     }

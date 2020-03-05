@@ -1,9 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h2>Change password</h2>
-    {{ form(formChangePass) }}
-
-    <h2>Change your personals</h2>
-    {{ form(formChangePersonal)}}
+    <a href="{{ path('app_edit_profile', {info: 'pass'})}}">Zmiana hasła</a>
+    <a href="{{ path('app_edit_profile', {info: 'personal'})}}">Zmiana danych personalnych</a>
+    {{ form(form) }}
 {% endblock %}

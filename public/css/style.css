@@ -313,6 +313,111 @@ input[type=checkbox] {
           flex-direction: row;
 }
 
+/*** quizes ***/
+#categories {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+}
+
+#categories .category {
+  width: 300px;
+  height: 300px;
+  background: #f8f8f8;
+  border-radius: 3px;
+  -webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+          box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+#categories .category > div {
+  width: 100%;
+}
+
+#categories .category .image {
+  height: 240px;
+  overflow: hidden;
+}
+
+#categories .category .name {
+  height: 60px;
+}
+
+.result {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  text-align: center;
+  background: #f8f8f8;
+  border-radius: 3px;
+  -webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+          box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.result .score {
+  font-size: 20px;
+}
+
+.result .score p:first-child {
+  font-weight: bold;
+}
+
+.result .answers {
+  width: 100%;
+}
+
+.result .answers .yourAnswer, .result .answers .correctAnswer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 70px;
+  width: 100%;
+  border-top: 2px solid #c1e0c3;
+}
+
+.result .answers .yourAnswer p, .result .answers .correctAnswer p {
+  font-weight: bold;
+}
+
+.result .answers .correct {
+  background: #50c456;
+}
+
+.result .answers .bad {
+  background: #f55959;
+}
+
+.result .answers .correctAnswer {
+  background: #a3eba6;
+}
+
 /*** footer ***/
 #footer {
   margin: 5px 0 0;

@@ -35,6 +35,20 @@ class CategoryRepository extends ServiceEntityRepository
         ;
     }
     */
+    /**
+     * @return Category
+     */
+    public function findCategoryName(string $slug) {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT c.name
+            FROM App\Entity\Category c
+            WHERE c.slug = :slug'
+            )->setParameter('slug', $slug)
+            ->setMaxResults(1);
+        return $query->getOneOrNullResult();
+    }
 
     /*
     public function findOneBySomeField($value): ?Category

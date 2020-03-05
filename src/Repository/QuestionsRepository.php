@@ -19,32 +19,20 @@ class QuestionsRepository extends ServiceEntityRepository
         parent::__construct($registry, Questions::class);
     }
 
-    // /**
-    //  * @return Questions[] Returns an array of Questions objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('q')
-            ->andWhere('q.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('q.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+    /**
+     * @return Questions[]
+     */
 
-    /*
-    public function findOneBySomeField($value): ?Questions
-    {
-        return $this->createQueryBuilder('q')
-            ->andWhere('q.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+     public function findQuestions(string $slug) {
+         $entityManager = $this->getEntityManager();
+
+         $query = $entityManager->createQuery(
+             'SELECT qu
+             FROM App\Entity\Questions qu
+             INNER JOIN App\Entity\Quiz q
+             WHERE qu.quiz = q.id AND q.slug = :slug'
+         )->setParameter('slug', $slug);
+
+         return $query->getResult();
+     }
 }

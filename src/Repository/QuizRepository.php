@@ -35,7 +35,37 @@ class QuizRepository extends ServiceEntityRepository
         ;
     }
     */
+    /**
+     * @return Quiz[]
+     */
+    public function findByCategory(string $slug) {
+        $entityManager = $this->getEntityManager();
 
+        $query = $entityManager->createQuery(
+            'SELECT q
+            FROM App\Entity\Quiz q
+            INNER JOIN App\Entity\Category c
+            WHERE c.slug = :slug AND c.id = q.category'
+            )->setParameter('slug', $slug);
+
+        return $query->getResult();
+    }
+
+    /**
+     * @return Quiz
+     */
+    public function findQuizName(string $slug) {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT q.name
+            FROM App\Entity\Quiz q
+            WHERE q.slug = :slug'
+            )->setParameter('slug', $slug)
+            ->setMaxResults(1);
+        
+        return $query->getOneOrNullResult();
+    }
     /*
     public function findOneBySomeField($value): ?Quiz
     {

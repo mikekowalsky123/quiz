@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section class="result">
+        <div class="score">
+            <p>Twój wynik:</p>
+            <p>{{ goodAnswers }}/{{ countQuestions }}</p>
+        </div>
+        <div class="answers">
+            <p>Odpowiedzi:</p>
+            {% for i in 0..(questions|length - 1) %}
+                {% if answers[i].correct %}
+                <div class="yourAnswer correct">
+                {% else %}
+                <div class="yourAnswer bad">
+                {% endif %}
+                    <p>Twoja odpowiedz:</p>
+                    {{ answers[i].answer }}
+                </div>
+                <div class="correctAnswer">
+                    <p>Poprawna odpowiedz:</p>
+                    {{ questions[i].answer }}
+                </div>
+            {% endfor %}
+    </section>
+{% endblock %}

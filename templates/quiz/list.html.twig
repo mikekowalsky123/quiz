@@ -1,1 +1,17 @@
 {% extends 'base.html.twig' %}
+
+{% block body %}
+    <section id="categories">
+    {% for quiz in quizes %}
+        <a href="{{ path('app_quiz_contest', {slug: quiz.slug}) }}">
+            <div class="category">
+                <div class="image">
+                </div>
+                <div class="name">
+                    {{ quiz.name }}
+                </div>
+            </div>
+        </a>
+    {% endfor %}
+    </section>
+{% endblock %}
