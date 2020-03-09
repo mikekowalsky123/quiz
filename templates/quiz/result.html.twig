@@ -4,22 +4,22 @@
     <section class="result">
         <div class="score">
             <p>Twój wynik:</p>
-            <p>{{ goodAnswers }}/{{ countQuestions }}</p>
+            <p>{{ result.goodAnswersCount }}/{{ countQuestions }}</p>
         </div>
         <div class="answers">
             <p>Odpowiedzi:</p>
-            {% for i in 0..(questions|length - 1) %}
-                {% if answers[i].correct %}
-                <div class="yourAnswer correct">
+            {% for i in 0..(result.yourAnswers|length - 1) %}
+                {% if result.yourAnswers[i].correct %}
+                    <div class="yourAnswer correct">
                 {% else %}
-                <div class="yourAnswer bad">
+                    <div class="yourAnswer bad">
                 {% endif %}
-                    <p>Twoja odpowiedz:</p>
-                    {{ answers[i].answer }}
+                <p>Twoja odpowiedz:</p>
+                {{ result.yourAnswers[i].answer }}
                 </div>
                 <div class="correctAnswer">
                     <p>Poprawna odpowiedz:</p>
-                    {{ questions[i].answer }}
+                    {{ goodAnswers[i].answer }}
                 </div>
             {% endfor %}
     </section>

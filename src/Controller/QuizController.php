@@ -9,6 +9,7 @@ use App\Entity\Quiz;
 use App\Entity\Questions;
 use App\Form\QuizType;
 use Symfony\Component\HttpFoundation\Request;
+use App\Service\CheckAnswers;
 
 class QuizController extends AbstractController
 {
@@ -48,17 +49,19 @@ class QuizController extends AbstractController
      * @Route("/quiz/contest/{slug}", name="app_quiz_contest")
      */
     public function contestQuiz(string $slug, Request $request) {
+        //getting questions
         $repositoryQuestions = $this->getDoctrine()->getRepository(Questions::class);
         $questions = $repositoryQuestions->findQuestions($slug);
-
+        //getting title
         $repositoryQuiz = $this->getDoctrine()->getRepository(Quiz::class);
         $quizTitle = $repositoryQuiz->findQuizName($slug);
         $title = $quizTitle['name'];
-        
+        //preparing form - adding fields with NULL values to avoid giving answer to user while contesting
         $quiz = new Quiz();
         for($i = 0; $i < count($questions); $i++) {
             $quiz->getQuestions()->add(NULL);
         }
+        //creating form
         $quizForm = $this->createForm(QuizType::class, $quiz, [
             'action' => $this->generateUrl('app_quiz_result', [
                 'slug' => $slug,
@@ -74,48 +77,32 @@ class QuizController extends AbstractController
     /**
      * @Route("/quiz/result/{slug}", name="app_quiz_result")
      */
-    public function resultQuiz(string $slug, Request $request) {
-        $quiz = new Quiz();
-        $quizForm = $this->createForm(QuizType::class, $quiz);
+    public function resultQuiz(string $slug, Request $request, CheckAnswers $check) {
+        //handling form
+        $submittedQuiz = new Quiz();
+        $quizForm = $this->createForm(QuizType::class, $submittedQuiz);
         $quizForm->handleRequest($request);
 
 
         if($quizForm->isSubmitted() && $quizForm->isValid()) {
+            //finding correct answers
             $repositoryQuestions = $this->getDoctrine()
                 ->getRepository(Questions::class);
-            $questions = $repositoryQuestions->findQuestions($slug);
-            $quiz = $quizForm->getData();
-            $submittedQuestions = new Questions();
-            $submittedQuestions = $quiz->getQuestions();
+            $goodAnswers = $repositoryQuestions->findQuestions($slug);
 
-            foreach($submittedQuestions as $answer) {
-                $answers[]['answer'] = $answer->getAnswer();
-            }
+            //getting data from form and fetching them to array
+            $submittedQuiz = $quizForm->getData();
+            $submittedAnswers = new Questions();
+            $submittedAnswers = $submittedQuiz->getQuestions();
 
-            $goodAnswers = 0;
-            for($i = 0; $i < count($questions); $i++) {
-                if($questions[$i]->getAnswer() == $answers[$i]['answer']) {
-                    $goodAnswers++;
-                    $answers[$i]['correct'] = 1;
-                    }
-                else {
-                    $answers[$i]['correct'] = 0;
-                }
-            }
+            //getting result - good answers and count of them
+            $result = $check->checkAndGetAnswers($submittedAnswers, $goodAnswers);
         }
-        else {
-            dump($quizForm, $request);
-            return $this->render('test/test.html.twig', [
-                'title' => 'title',
-            ]);
-        }
-        
         return $this->render('quiz/result.html.twig', [
             'title' => "Wyniki",
-            'questions' => $questions,
-            'answers' => $answers,
             'goodAnswers' => $goodAnswers,
-            'countQuestions' => count($questions),
+            'result' => $result,
+            'countQuestions' => count($goodAnswers),
         ]);
     }
 }
